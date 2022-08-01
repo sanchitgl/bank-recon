@@ -1,0 +1,20 @@
+-create Environment 
+virtualenv bank_reco
+
+-Activate environment 
+source bank_reco/bin/activate
+
+-run streamlit app
+streamlit run Receivable_Account.py
+
+- export dependencies
+pip3 freeze > requirements.txt
+
+- Install dependencies
+pip install -r requirements.txt
+
+
+- How to add user
+Add username and user details in config.yaml
+Generate hashed password for the user by calling hash_password script - 'python hash_password.py'
+Add the hashed password in config,yaml file
