@@ -5,7 +5,7 @@ argon2-cffi-bindings==21.2.0
 asttokens==2.0.5
 attrs==21.4.0
 backcall==0.2.0
-backports.zoneinfo;python_version<"3.9"
+backports.zoneinfo==0.2.1
 bcrypt==3.2.2
 beautifulsoup4==4.11.1
 bleach==5.0.1
@@ -92,7 +92,7 @@ six==1.16.0
 smmap==5.0.0
 soupsieve==2.3.2.post1
 stack-data==0.3.0
-streamlit==1.10.0
+streamlit==1.11.1
 streamlit-authenticator==0.2.1
 tenacity==8.0.1
 terminado==0.15.0
