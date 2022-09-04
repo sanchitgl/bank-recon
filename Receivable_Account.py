@@ -49,39 +49,39 @@ if authentication_status:
         #st.write('###')
         bank_book, bank_statement, prev_recon, submit= file_upload_form()
         #print(warehouse_reports)
-        #try:
-        if submit:
-            state.submit_ra = True
-            #print(warehouse_reports)
-            #print(submit)
-                #print(shipment_instructions_df)
-            with st.spinner('Please wait'):
-                try:
-                    delete_temp()
-                except:
-                    print()
+        try:
+            if submit:
+                state.submit_ra = True
+                #print(warehouse_reports)
+                #print(submit)
+                    #print(shipment_instructions_df)
+                with st.spinner('Please wait'):
+                    try:
+                        delete_temp()
+                    except:
+                        print()
 
-                reconcile(bank_book, bank_statement, prev_recon)
-                #state.response = [payment_report_df, returns_report_df, reimbursement_report, inventory_ledger_df]
+                    reconcile(bank_book, bank_statement, prev_recon)
+                    #state.response = [payment_report_df, returns_report_df, reimbursement_report, inventory_ledger_df]
                 emp, but, empty = st.columns([2.05,1.2,1.5])
                 with but:
                     st.write("###")
                     with open('temp/ar_reconciled.xlsx', 'rb') as my_file:
                         click = st.download_button(label = 'Download in Excel', data = my_file, file_name = 'ar_reconciled.xlsx', 
                         mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-                    #print(click) 
-            #st.write(workbook) 
+                        #print(click) 
+                #st.write(workbook) 
 
-        else:
-            if state.submit_ra == True:
-                emp, but, empty = st.columns([2.05,1.2,1.5]) 
-                with but:
-                    st.write("###")
-                    with open('temp/ar_reconciled.xlsx', 'rb') as my_file:
-                        click = st.download_button(label = 'Download in Excel', data = my_file, file_name = 'ar_reconciled.xlsx', 
-                        mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-        # except:
-        #     st.error("Run failed, kindly check if the inputs are valid")
+            else:
+                if state.submit_ra == True:
+                    emp, but, empty = st.columns([2.05,1.2,1.5]) 
+                    with but:
+                        st.write("###")
+                        with open('temp/ar_reconciled.xlsx', 'rb') as my_file:
+                            click = st.download_button(label = 'Download in Excel', data = my_file, file_name = 'ar_reconciled.xlsx', 
+                            mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        except:
+            st.error("Run failed, kindly check if the inputs are valid")
 
     def delete_temp():
         os.remove('temp/ar_reconciled.xlsx.xlsx')
