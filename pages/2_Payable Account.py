@@ -1,7 +1,7 @@
 import streamlit as st
 from page_config import page_setup
 import pandas as pd
-from backend.ecu_ap_june22 import reconcile
+from backend.ecu_ap_function import reconcile
 import os
 import streamlit_authenticator as stauth
 import pickle 
@@ -60,30 +60,37 @@ if authentication_status:
                     except:
                         print()
 
-                    reconcile(bank_book, bank_statement, prev_recon)
-                #state.response = [payment_report_df, returns_report_df, reimbursement_report, inventory_ledger_df]
-                emp, but, empty = st.columns([2.05,1.2,1.5])
-                with but:
-                    st.write("###")
-                    with open('temp/ap_bankstatement_bankbook_reconciled.xlsx', 'rb') as my_file:
-                        click = st.download_button(label = 'Download in Excel', data = my_file, file_name = 'ap_bankstatement_bankbook_reconciled.xlsx', 
-                        mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') 
-                        #print(click) 
-                #st.write(workbook) 
+                    a = reconcile(bank_book, bank_statement, prev_recon)
+                    if a != '':
+                        #print("it should stop")
+                        st.error(a)
+                        #st.stop()
+                    #state.response = [payment_report_df, returns_report_df, reimbursement_report, inventory_ledger_df]
+                    else:
+                        emp, but, empty = st.columns([2.05,1.2,1.5])
+                        with but:
+                            st.write("###")
+                            with open('temp/ap_reconciled.xlsx', 'rb') as my_file:
+                                click = st.download_button(label = 'Download in Excel', data = my_file, file_name = 'ap_reconciled.xlsx', 
+                                mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') 
+                    #print(click) 
+            #st.write(workbook) 
 
             else:
                 if state.submit_pa == True:
-                    emp, but, empty = st.columns([2.05,1.2,1.5]) 
-                    with but:
-                        st.write("###")
-                        with open('temp/ap_bankstatement_bankbook_reconciled.xlsx', 'rb') as my_file:
-                            click = st.download_button(label = 'Download in Excel', data = my_file, file_name = 'ap_bankstatement_bankbook_reconciled.xlsx', 
-                            mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+                    if os.path.exists('temp/ap_reconciled.xlsx'):
+                        #print("HIIIIIII")
+                        emp, but, empty = st.columns([2.05,1.2,1.5]) 
+                        with but:
+                            st.write("###")
+                            with open('temp/ap_reconciled.xlsx', 'rb') as my_file:
+                                click = st.download_button(label = 'Download in Excel', data = my_file, file_name = 'ap_reconciled.xlsx', 
+                                mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         except:
            st.error("Run failed, kindly check if the inputs are valid")
 
     def delete_temp():
-        os.remove('temp/ap_bankstatement_bankbook_reconciled.xlsx')
+        os.remove('temp/ap_reconciled.xlsx')
 
     def file_upload_form():
         colour = "#89CFF0"
